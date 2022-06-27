@@ -22,8 +22,10 @@
 
 namespace LowPolyTerrainGenerator.Height {
     public enum HeightStrategyType {
+        Coordinate,
         Random, 
         Noise, 
         HeightMap
+        
     }
 }

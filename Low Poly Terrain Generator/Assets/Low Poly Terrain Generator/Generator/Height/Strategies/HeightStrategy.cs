@@ -19,7 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
+using System.IO;
+using UnityEngine;
 namespace LowPolyTerrainGenerator.Height {
     public abstract class HeightStrategy {
         protected int length;
@@ -50,6 +51,43 @@ namespace LowPolyTerrainGenerator.Height {
             }
             return heights;
         }
+
+        public int[,] GenerateCSV()
+        {
+            string path = "/Users/matthias/Documents/Projekte/HSD_RecommenderVR/t-SNE/dataset/t-SNE/dataSmall.csv";
+            StreamReader strReader = new StreamReader(path);
+
+            int[,] heights = new int[length + 1, width + 1];
+            for (int i = 0; i < heights.GetLength(0); i++)
+            {
+                for (int j = 0; j < heights.GetLength(1); j++)
+                {
+                    heights[i, j] = GetHeight(i, j); ;
+                    //Debug.Log(heights[i, j]);
+                }
+            }
+
+            bool endOfFile = false;
+
+            while (!endOfFile)
+            {
+
+                string data_string = strReader.ReadLine();
+
+                if (data_string == null)
+                {
+                    endOfFile = true;
+                    break;
+                }
+
+                var data_values = data_string.Split(',');
+
+                heights[System.Convert.ToInt32(data_values[1]), System.Convert.ToInt32(data_values[2])] = 60;
+            }
+
+            return heights;
+        }
+
 
         /// <summary>
         /// Method to be implemented for calculating the height for a given point with a pattern.

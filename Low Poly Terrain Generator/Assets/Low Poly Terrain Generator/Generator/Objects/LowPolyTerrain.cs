@@ -50,6 +50,7 @@ namespace LowPolyTerrainGenerator.Objects {
                 for (int j = 0; j <= options.width; j++) {
                     Vertices[baseIndex] = new Vector3(polySize * j, heights[i, j], polySize * i);
                     baseIndex++;
+                    Debug.Log(heights[i, j]);
                 }
             }
 
@@ -79,7 +80,13 @@ namespace LowPolyTerrainGenerator.Objects {
 
         private int[,] GenerateHeightMap(TerrainOptions options) {
             HeightStrategy strategy = HeightStrategyFactory.Create(options);
-            return strategy.Generate();
+            if (strategy.ToString() == "LowPolyTerrainGenerator.Height.Strategies.CoordinateHeightStrategy") {
+                Debug.Log("asdfasdfasdf");
+                return strategy.GenerateCSV();
+            }
+            else {
+                return strategy.Generate();
+            }       
         }
 
         private void AddMesh() {

@@ -20,23 +20,26 @@
  * SOFTWARE.
  */
 
+
+
 using UnityEngine;
-using UnityEditor;
-using LowPolyTerrainGenerator;
+using System.IO;
 
-public class CreateTerrainWizard : ScriptableWizard {
-    [Header("Terrain")]
-    public TerrainOptions terrainOptions = TerrainOptions.Default();
+namespace LowPolyTerrainGenerator.Height.Strategies
+{
+    public class CoordinateHeightStrategy : HeightStrategy
+    {
+        private float scale;
+        public CoordinateHeightStrategy(int length, int width, int maximumHeight, float scale) : base(length, width, maximumHeight){
+            this.scale = scale;
+        }
 
-    [Header("Environment")]
-    public EnvironmentOptions environmentOptions = EnvironmentOptions.Default();
-
-    [MenuItem("GameObject/Generate Low Poly Terrain...")]
-    static void CreateWizard() {
-        DisplayWizard<CreateTerrainWizard>("Generate Terrain", "Generate new");
-    }
-
-    void OnWizardCreate() {
-        TerrainGenerator.Landscape(terrainOptions, environmentOptions);
+        override protected int GetHeight(int x, int y)
+        {
+            float xPos = (float)x / width * this.scale;
+            float yPos = (float)y / length * this.scale;
+            float height = Mathf.PerlinNoise(xPos, yPos);
+            return (int)(height * maximumHeight);
+        }   
     }
 }

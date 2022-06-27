@@ -31,7 +31,7 @@ namespace LowPolyTerrainGenerator {
 
         // Because of memory issues regarding the calculation of the vertices,
         // the length and width of the terrain should not exceed a certain number.
-        private static int maximumSize = 1000;
+        private static int maximumSize = 40000;
 
         /// <summary>
         /// Method Landscape generates a landscape GameObject containing a terrain and environment.

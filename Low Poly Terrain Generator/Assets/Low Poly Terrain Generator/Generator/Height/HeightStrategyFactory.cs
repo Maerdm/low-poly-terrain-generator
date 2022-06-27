@@ -39,8 +39,11 @@ namespace LowPolyTerrainGenerator.Height {
                     strategy = new MapHeightStrategy(options.length, options.width, options.maximumHeight, options.heightMap);
                     break;
                 case HeightStrategyType.Random:
-                default: 
                     strategy = new RandomHeightStrategy(options.length, options.width, options.maximumHeight);
+                    break;
+                case HeightStrategyType.Coordinate:
+                default:
+                    strategy = new CoordinateHeightStrategy(options.length, options.width, options.maximumHeight, options.scale);
                     break;
             }
             return strategy;
